@@ -1,8 +1,10 @@
-// Variables globales
+// Declaración de variables
 let nombre = localStorage.getItem("nombre");
-let contrasenia = JSON.parse(localStorage.getItem("contrasenia")) || null;
-let transacciones = [];
+let nombreTextoHtml = document.getElementById("txtmarcoAlto");
+let contrasenia;
+let transacciones = JSON.parse(localStorage.getItem("historialTransferencias")) || [];
 let botonEnviarDinero = document.getElementById("enviarDinero");
+let botonRecibirDinero = document.getElementById("botonRecibirDinero");
 let intentos = 6;
 let saldo = parseFloat(localStorage.getItem("saldo")) || 0;
 
@@ -11,11 +13,40 @@ let saldo = parseFloat(localStorage.getItem("saldo")) || 0;
   .then(response => response.json())
   .then(data => console.log(data));
 
-// Funciones
-function inicializarSaldo() {
-  localStorage.setItem("saldo", JSON.stringify(saldo));
-  let saldoTexto = document.getElementById("txtCuadroPrincipal");
-  if (saldoTexto) saldoTexto.textContent = `$${saldo}`;
+
+let detalleActividad = document.getElementById("detalleActividad");
+
+// Mostrar historial inicial si es que existe
+transacciones.forEach((transaccion) => {
+  detalleActividad.innerHTML += generarTarjetaHTML(transaccion);
+});
+
+// Función para registrar una transacción
+function registrarTransaccion(tipoTransaccion, nombreTransaccion, cantidadTransaccion) {
+  const nuevaTransaccion = {
+    destinatario: nombreTransaccion,
+    cantidad: cantidadTransaccion,
+    tipoTransaccion: tipoTransaccion,
+    fecha: new Date().toLocaleString(),
+  };
+
+  // Guardar la transacción en el historial
+  transacciones.push(nuevaTransaccion);
+  localStorage.setItem("historialTransferencias", JSON.stringify(transacciones));
+
+  // Mostrar la transacción en la interfaz
+  detalleActividad.innerHTML += generarTarjetaHTML(nuevaTransaccion);
+}
+
+// Función para generar el HTML de una tarjeta de transacción
+function generarTarjetaHTML(transaccion) {
+  return `
+    <div class="tarjeta-transaccion">
+      Nombre del transferido: ${transaccion.destinatario}<br>
+      Cantidad: $${transaccion.cantidad}<br>
+      Tipo de Transacción: ${transaccion.tipoTransaccion}<br>
+      Fecha: ${transaccion.fecha}
+    </div>`;
 }
 
 function mostrarMensajeBienvenida() {
@@ -38,7 +69,6 @@ function almacenarContrasenia() {
 
       function inicializarSaldo(){
       if (!saldo) {
-        saldo = 80000;
         localStorage.setItem("saldo", JSON.stringify(saldo));
       }
       
@@ -196,15 +226,14 @@ function almacenarContrasenia() {
       }
 
       //función para recibir Dinero
-      recibirDinero.onclick = function () {
-       recibirDinero = document.getElementById("recibirDinero");
+      botonRecibirDinero.onclick = function () {
+       botonRecibirDinero = document.getElementById("botonRecibirDinero");
         let recibirNombre = prompt("Nombre de la cuenta a extraer el dinero");
         let recibirCantidad = parseInt(prompt("Cantidad a recibir"));
         if (recibirNombre !== "" && recibirCantidad > 0 && validarContrasenia(recibirNombre, recibirCantidad)) {
           saldo = saldo + recibirCantidad;
           saldoTexto.textContent = `$${saldo}`;
           localStorage.setItem("saldo", JSON.stringify(saldo));
-          let fechaActual = new Date().toLocaleString();
           registrarTransaccion("Ingreso", recibirNombre, recibirCantidad);
           alert("¡¡Extracción exitosa!!");
         } else {
