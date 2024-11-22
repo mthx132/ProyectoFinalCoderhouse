@@ -35,12 +35,15 @@
         <h1>Conversor de Pesos a Dólares</h1>
         <input type="number" id="pesoInput" placeholder="Ingresa la cantidad en pesos" min="0">
         <select id="dollarType">
-            <option value="dolar_oficial">Dólar Oficial</option>
-            <option value="dolar_blue">Dólar Blue</option>
-            <option value="dolar_mep">Dólar MEP</option>
-            <option value="dolar_ccl">Dólar CCL</option>
+            <option value="oficial">Dólar Oficial</option>
+            <option value="blue">Dólar Blue</option>
+            <option value="bolsa">Dólar Bolsa</option>
+            <option value="contadoconliqui">Dólar Contado con Liquidación</option>
+            <option value="mayorista">Dólar Mayorista</option>
+            <option value="cripto">Dólar Cripto</option>
+            <option value="tarjeta">Dólar Tarjeta</option>
         </select>
-        <button onclick="convert()">Convertir</button>
+        <button id="botonConversor" >Convertir</button>
 
         <div class="result" id="result">
             <!-- El resultado aparecerá aquí -->

@@ -17,11 +17,13 @@ const contenedorConversor = document.querySelector(".container");
 const botonNoche = document.getElementById("botonNoche");
 
 // funcion para convertir de peso a dolar
-
+botonConversor.onclick = function (){
+  convert()
+}
 function convert() {
-  const pesoAmount = parseFloat(document.getElementById('pesoInput').value); 
-  const dollarType = document.getElementById('dollarType').value; 
-  const resultElement = document.getElementById('result'); 
+  const pesoAmount = parseFloat(document.getElementById('pesoInput').value);
+  const dollarType = document.getElementById('dollarType').value; // El valor es "oficial", "blue", etc.
+  const resultElement = document.getElementById('result');
 
   if (!pesoAmount || pesoAmount <= 0) {
       resultElement.textContent = "Por favor, ingresa una cantidad válida en pesos.";
@@ -32,17 +34,20 @@ function convert() {
   fetch('https://dolarapi.com/v1/dolares')
       .then(response => response.json())
       .then(data => {
-          console.log(data); // Verifica la estructura de los datos
+          console.log("Datos de la API:", data);
 
-          // Accede al valor del tipo de dólar
-          let dolarInfo = data[dollarType];
-          let exchangeRate = typeof dolarInfo === 'object' ? dolarInfo.value : dolarInfo;
+          // Buscar el objeto en el array que coincida con el valor de dollarType
+          const dolarInfo = data.find(item => item.casa === dollarType);
 
-          if (exchangeRate) {
+          if (dolarInfo) {
+              // Usar la tasa de "venta" para la conversión
+              const exchangeRate = dolarInfo.venta;
+
               // Calcula la conversión
               const conversion = (pesoAmount / exchangeRate).toFixed(2);
+
               // Muestra el resultado
-              resultElement.textContent = `Con $${pesoAmount} ARS obtienes $${conversion} USD (${dollarType.replace('_', ' ').toUpperCase()}).`;
+              resultElement.textContent = `Con $${pesoAmount} ARS obtienes $${conversion} USD (${dolarInfo.nombre}).`;
           } else {
               resultElement.textContent = "No se pudo obtener el tipo de cambio seleccionado.";
           }
@@ -52,6 +57,7 @@ function convert() {
           resultElement.textContent = "Hubo un error al obtener los datos de la API.";
       });
 }
+
 //función para activar el modo Noche o modo dia
 
 botonNoche.addEventListener("click", () => {
@@ -69,36 +75,6 @@ function traerCotizacionesDolares() {
  cotizacionesDolares = fetch('https://dolarapi.com/v1/dolares')
 }
 traerCotizacionesDolares()
-//funcion para convertir de peso a dolar
-  function Convertir() {
-    const pesoAmount = parseFloat(document.getElementById('pesoInput').value); // Cantidad ingresada
-    const dollarType = document.getElementById('dollarType').value; // Tipo de dólar seleccionado
-    const resultElement = document.getElementById('result'); // Contenedor para el resultado
-
-    if (!pesoAmount || pesoAmount <= 0) {
-        resultElement.textContent = "Por favor, ingresa una cantidad válida en pesos.";
-        return;
-    }
-    fetch('https://dolarapi.com/v1/dolares')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-
-            const dolarInfo = data.find(item => item.casa === dollarType);
-
-            if (dolarInfo && dolarInfo.venta) {
-                const exchangeRate = parseFloat(dolarInfo.venta);
-                const conversion = (pesoAmount / exchangeRate).toFixed(2); // Calcula la conversión
-                resultElement.textContent = `Con $${pesoAmount} ARS obtienes $${conversion} USD (${dolarInfo.nombre}).`;
-            } else {
-                resultElement.textContent = "No se pudo obtener el tipo de cambio seleccionado.";
-            }
-        })
-        .catch(error => {
-            console.error('Error al obtener los datos:', error);
-            resultElement.textContent = "Hubo un error al obtener los datos de la API.";
-        });
-}
 
 // Mostrar historial de la Ultima Actividad si es que existe
 
@@ -167,7 +143,6 @@ async function mostrarMensajeBienvenida() {
 
 // Función para almacenar la contraseña si no está registrada
 async function almacenarContrasenia() {
-  console.log('entre en la funcion')
   if (!contrasenia) {
     const { value: contrasenia } = await Swal.fire({
       icon: "question",
@@ -214,6 +189,7 @@ async function pedirContraseña() {
 // Función para verificar si la contraseña es correcta
 async function validarContrasenia() {
   let contraseniaIngresada = await pedirContraseña();
+  console.log (contraseniaIngresada, pedirContraseña)
   console.log(contraseniaIngresada , contrasenia)
   if (contraseniaIngresada === contrasenia) {
     return true; // Contraseña correcta
