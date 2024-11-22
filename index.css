@@ -11,8 +11,9 @@ body {
   align-items: center;
 }
 
+/* Margen superior */
 #margenAlto {
-  background-color: rgb(2, 124, 194);
+  background-color: rgb(0,158,227);
   width: 100%;
   height: 100px;
   position: fixed;
@@ -41,44 +42,38 @@ body {
 #CuadroPrincipal {
   cursor: pointer;
   text-align: center;
-  color: white;
+  color: black;
   width: 300px;
   height: 200px;
-  background-color: hwb(208 38% 0%);
+  background-color: rgb(141,205,232);
   display: flex;               
   flex-direction: column;      
-  justify-content: center;     
+  justify-content: center;   
+  border-radius: 7px;  
 }
 
-#txtCuadroPrincipal{
-margin-top: -20px;
-
+#txtCuadroPrincipal {
+  margin-top: -10px;
 }
 
-#CuadroDeTransferencias{
-    font-size: 10px;
-    cursor: pointer;
-    transition: box-shadow 0.2s ease;
-    text-align: center;
-    color: white;
-    width: 400px;
-    height: 550px;
-    background-color: hwb(208 38% 0%);
-
+#CuadroDeTransferencias {
+  font-size: 10px;
+  cursor: pointer;
+  box-shadow: 4px 4px 3px rgb(140,140,140);
+  text-align: center;
+  color: rgb(29, 29, 29);
+  width: 400px;
+  height: 550px;
+  background-color: rgb(141,205,232);
+  border-radius: 7px;  
 }
 
-#CuadroDeTransferencias:hover{
-
-box-shadow: 4px 4px 3px black;
-
-}
 /*acciones del cuadro principal */
 #AccionesDelCuadroPrincipal {
   display: flex;              
   flex-direction: row;        
   margin-left: 10px;
   justify-content: center;
-  
 }
 
 button {
@@ -102,8 +97,8 @@ button:hover {
 button:active {
   transform: translateY(1px);
 }
-/*---------------*/
-#detalleActividad{
+
+#detalleActividad {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -112,19 +107,21 @@ button:active {
 }
 
 .tarjeta-transaccion {
- background-color: #298cce
+  background-color: rgba(112, 156, 185, 0.226)
 }
 
-/*barra lateral*/
+/* Barra lateral */
 body {
   display: flex;
   margin: 0;
   font-family: Arial, sans-serif;
 }
+
 .sidebar {
   width: 250px;
   height: 90vh;
-  background-color: rgb(76, 111, 175);
+  background-color: rgb(238,238,238);
+  border-right: 1px solid #ccc;
   display: flex;
   margin-top: 100px;
   flex-direction: column;
@@ -133,18 +130,105 @@ body {
   left: 0;
   top: 0;
 }
+
 .sidebar a {
   padding: 15px 20px;
   text-decoration: none;
-  color: #ecf0f1;
+  color: rgb(91,91,91);
   font-size: 16px;
   display: flex;
   align-items: center;
   transition: background-color 0.3s;
 }
+
 .sidebar a:hover {
-  background-color: #34495e;
+  background-color: #34495e59;
 }
-.sidebar a.active {
-  background-color: #1abc9c;
+
+.sidebar a#active {
+  background-color: rgb(141,205,232);
+}
+
+.sidebarLn {
+  border: none;
+  border-bottom: 1px solid #cccccc8e;
+}
+
+/* Modo noche */
+body.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+body.dark-mode #margenAlto {
+  background-color: #333;
+}
+
+body.dark-mode #txtmarcoAlto,
+body.dark-mode #txtInicio {
+  color: white;
+}
+
+body.dark-mode #CuadroPrincipal {
+  background-color: #333;
+  color: white;
+}
+
+body.dark-mode #CuadroDeTransferencias {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode .sidebar {
+  background-color: #333;
+  color: white;
+}
+
+body.dark-mode .sidebar a {
+  color: white;
+}
+
+body.dark-mode .sidebar a:hover {
+  background-color: #555;
+}
+
+body.dark-mode .sidebar a#active {
+  background-color: rgb(141,205,232);
+}
+
+/* Botón de alternar */
+#botonNoche {
+  padding: 10px 20px;
+  margin: 20px 0;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#botonNoche:hover {
+  background-color: #0056b3;
+}
+
+#contenedorInicio{
+  display: flex;
+  padding-top: 120px;
+  gap: 20px;
+}
+.contenedor {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#contenedorInicio {
+  /* Aquí se mantiene la estructura del contenedor original */
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebarLn {
+  text-decoration: none;
+  margin: 10px;
 }

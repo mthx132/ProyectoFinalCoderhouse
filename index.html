@@ -8,31 +8,44 @@
         <h1 id="txtmarcoAlto">¡¡Bienvenido "usuario/a"!!</h1>
         <h1 id="txtInicio">Inicio</h1>
     </section>
-    <div id="CuadroPrincipal">
-        <h1 id="txtCuadroPrincipal"></h1>
-        <div id="AccionesDelCuadroPrincipal">
-            <button id="enviarDinero">Enviar dinero</button>
-            <button id="botonRecibirDinero">Recibir dinero</button>
-            <button id="valorMoneda">valores de las Monedas</button>
+
+    <div id="contenedorInicio">
+        <div id="CuadroPrincipal">
+            <h1 id="txtCuadroPrincipal"></h1>
+            <div id="AccionesDelCuadroPrincipal">
+                <button id="enviarDinero">Enviar dinero</button>
+                <button id="botonRecibirDinero">Recibir dinero</button>
+            </div>
         </div>
+        <div id="CuadroDeTransferencias">
+            <h1>Tu última actividad:</h1>
+            <div id="detalleActividad"></div>
+        </div>
+
     </div>
-    <div id="CuadroDeTransferencias">
-        <h1>Tu última actividad:</h1>
-        <div id="detalleActividad"></div>
-    </div>
-<!--     <div id="cotizacion">cotización</div> -->
+
     <!--  barra lateral -->
     <div class="sidebar">
-        <a href="#inicio" class="active">Inicio</a>
-        <a href="#tu-dinero">Tu Dinero</a>
-        <a href="#actividad">Actividad</a>
-        <a href="#transferir-dinero">Transferir Dinero</a>
-        <a href="#reservas">Reservas</a>
-        <a href="#prestamos">Préstamos</a>
-        <a href="#suscripciones">Tus Suscripciones</a>
-        <a href="#informes-facturacion">Informes y Facturación</a>
-        <a href="#cerrar-sesion">Cerrar Sesión</a>
-      </div>
+        <a href="#inicio" class="sidebarLn" id="active">Inicio</a>
+        <a href="#tu-dinero" class="sidebarLn">Tu Dinero</a>
+        <a href="#cerrar-sesion" id="botonCerrarSesion" class="sidebarLn">Cerrar Sesión</a>
+        <button id="botonNoche">modo noche</button>
+    </div>
+    <div class="container">
+        <h1>Conversor de Pesos a Dólares</h1>
+        <input type="number" id="pesoInput" placeholder="Ingresa la cantidad en pesos" min="0">
+        <select id="dollarType">
+            <option value="dolar_oficial">Dólar Oficial</option>
+            <option value="dolar_blue">Dólar Blue</option>
+            <option value="dolar_mep">Dólar MEP</option>
+            <option value="dolar_ccl">Dólar CCL</option>
+        </select>
+        <button onclick="convert()">Convertir</button>
+
+        <div class="result" id="result">
+            <!-- El resultado aparecerá aquí -->
+        </div>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="./js/index.js"></script>
